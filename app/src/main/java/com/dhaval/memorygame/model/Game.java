@@ -1,6 +1,5 @@
 package com.dhaval.memorygame.model;
 
-import android.util.Log;
 import android.util.Pair;
 
 import java.util.Random;
@@ -11,12 +10,14 @@ public class Game {
     private int actualTime;
     private int row, column;
     private int[] boardValues;
+    private boolean[] revealedCells;
 
     public Game(int level, int row, int column, int maxTime) {
         this.row = row;
         this.column = column;
         this.level = level;
         this.maxTime = maxTime;
+        revealedCells = new boolean [row * column];
         initializeBoard();
     }
 
@@ -28,22 +29,28 @@ public class Game {
             }
         }
 
-        while (!boardInitialized()) {
-            int randomValue = getRandomValue(50 * level);
-            Pair<Integer, Integer> firstPair = getRandomUnfilledPosition();
-            Pair<Integer, Integer> secondPair = getRandomUnfilledPosition();
-            if (firstPair != null && secondPair != null) {
-                boardValues[firstPair.first + firstPair.second] = randomValue;
-                boardValues[secondPair.first + secondPair.second] = randomValue;
-            }
-        }
+        boardValues[0] = 22;
+        boardValues[1] = 21;
+        boardValues[2] = 22;
+        boardValues[3] = 21;
+        boardValues[4] = 24;
+        boardValues[5] = 24;
 
-        Log.i("Game ", " printing board values");
-        for (int r = 0; r < row; r++) {
-            for (int c = 0; c < column; c++) {
-                Log.i("Game ", " value [" + r + "] [" + c + "] = " + boardValues[r + c]);
-            }
-        }
+//        while (!boardInitialized()) {
+//            int randomValue = getRandomValue(50 * level);
+//            Pair<Integer, Integer> firstPair = getRandomUnfilledPosition();
+//            Pair<Integer, Integer> secondPair = getRandomUnfilledPosition();
+//            if (firstPair != null && secondPair != null) {
+//                boardValues[firstPair.first + firstPair.second] = randomValue;
+//                boardValues[secondPair.first + secondPair.second] = randomValue;
+//            }
+//        }
+//        Log.i("Game ", " printing board values");
+//        for (int r = 0; r < row; r++) {
+//            for (int c = 0; c < column; c++) {
+//                Log.i("Game ", " value [" + r + "] [" + c + "] = " + boardValues[r + c]);
+//            }
+//        }
     }
 
     private Pair<Integer, Integer> getRandomUnfilledPosition() {
@@ -61,7 +68,7 @@ public class Game {
 
     private int getRandomValue(int seed) {
         Random random = new Random(seed);
-        return random.nextInt();
+        return Math.abs(random.nextInt() % seed);
     }
 
     private boolean boardInitialized() {
@@ -114,5 +121,14 @@ public class Game {
 
     public int getColumn() {
         return column;
+    }
+
+    public boolean[] getRevealedCells() {
+        return revealedCells;
+    }
+
+    public void setCellRevealed(int position) {
+        revealedCells[position] = true;
+
     }
 }

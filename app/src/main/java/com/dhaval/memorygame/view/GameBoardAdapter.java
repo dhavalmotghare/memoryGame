@@ -9,16 +9,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dhaval.memorygame.R;
+import com.dhaval.memorygame.model.Game;
 
 public class GameBoardAdapter extends RecyclerView.Adapter<GameBoardAdapter.ViewHolder> {
 
-    private int[] cells;
+    private Game game;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
-    public GameBoardAdapter(Context context, int[] cells) {
+    public GameBoardAdapter(Context context, Game game) {
         this.mInflater = LayoutInflater.from(context);
-        this.cells = cells;
+        this.game = game;
     }
 
     @Override
@@ -30,12 +31,16 @@ public class GameBoardAdapter extends RecyclerView.Adapter<GameBoardAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.myTextView.setText(cells[position]);
+        if (game.getRevealedCells()[position]) {
+            holder.myTextView.setText(game.getBoardValues()[position] + "");
+        } else {
+            // don't show anything unless it is revealed
+        }
     }
 
     @Override
     public int getItemCount() {
-        return cells.length;
+        return game.getBoardValues().length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -55,7 +60,7 @@ public class GameBoardAdapter extends RecyclerView.Adapter<GameBoardAdapter.View
 
     // convenience method for getting data at click position
     public int getItem(int id) {
-        return cells[id];
+        return game.getBoardValues()[id];
     }
 
     // allows clicks events to be caught

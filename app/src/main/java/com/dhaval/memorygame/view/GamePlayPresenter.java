@@ -7,7 +7,6 @@ public class GamePlayPresenter implements GamePlayContract.Presenter {
     private Game currentGame;
     private GamePlayContract.View view = null;
 
-
     public GamePlayPresenter() {
     }
 
@@ -24,12 +23,17 @@ public class GamePlayPresenter implements GamePlayContract.Presenter {
     }
 
     @Override
-    public void onEndGame() {
+    public void onItemClicked(int position) {
+        currentGame.setCellRevealed(position);
+    }
+
+    @Override
+    public void onGamePaused() {
 
     }
 
     @Override
-    public void onItemClicked(int position) {
+    public void onGameResumed() {
 
     }
 

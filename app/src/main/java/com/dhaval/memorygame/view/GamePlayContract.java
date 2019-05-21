@@ -16,15 +16,7 @@ public interface GamePlayContract {
          */
         void onGameInitialized(Game game);
 
-        /**
-         * Notifies the presenter that the user has paused the game.
-         */
-        void onGamePaused();
-
-        /**
-         * Notifies the presenter that the user has resumed the game.
-         */
-        void onGameResumed();
+        void onEndGame();
 
     }
 
@@ -39,8 +31,16 @@ public interface GamePlayContract {
          */
         void detach();
 
-        void onEndGame();
-
         void onItemClicked(int position);
+
+        /**
+         * Notifies the presenter that the user has paused the game.
+         */
+        void onGamePaused();
+
+        /**
+         * Notifies the presenter that the user has resumed the game.
+         */
+        void onGameResumed();
     }
 }

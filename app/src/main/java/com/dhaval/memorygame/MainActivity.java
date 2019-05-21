@@ -39,23 +39,19 @@ public class MainActivity extends AppCompatActivity implements GamePlayContract.
     public void onGameInitialized(Game game) {
         RecyclerView recyclerView = findViewById(R.id.game_board);
         recyclerView.setLayoutManager(new GridLayoutManager(this, game.getColumn()));
-        gameBoardAdapter = new GameBoardAdapter(this, game.getBoardValues());
+        gameBoardAdapter = new GameBoardAdapter(this, game);
         gameBoardAdapter.setClickListener(this);
         recyclerView.setAdapter(gameBoardAdapter);
     }
 
     @Override
-    public void onGamePaused() {
-
-    }
-
-    @Override
-    public void onGameResumed() {
+    public void onEndGame() {
 
     }
 
     @Override
     public void onItemClick(View view, int position) {
         gamePlayPresenter.onItemClicked(position);
+        gameBoardAdapter.notifyDataSetChanged();
     }
 }
